@@ -44,47 +44,39 @@ configure in the usart 2 as asynchronous mode and set the baud rate as 115200 as
 ## STM 32 CUBE PROGRAM :
 ```
 #include "main.h"
-#include <stdbool.h>
-bool IRSENSOR; 
+#include "stdio.h"
+int __io_putchar(int ch)
+{
+  HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
+  return ch;
+}
+UART_HandleTypeDef huart2;
+
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_USART2_UART_Init(void);
 
-           int main(void)
+int main(void)
 {
-  
   HAL_Init();
-  
   SystemClock_Config();
 
   MX_GPIO_Init();
-    
+  MX_USART2_UART_Init();
+  
   while (1)
   {
-	  IRPAIR();
+   
+     printf("Saveetha Engineering College\n");
+     HAL_Delay(5000);
   }
-}
-
-void IRPAIR()
-{
-	IRSENSOR = HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_4);
-	if(IRSENSOR == 0)
-	{
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET);
-		HAL_Delay(2000);
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
-		HAL_Delay(2000);
-	}
-	else
-	{
-		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
-		HAL_Delay(2000);
-	}
 }
 ```
 
 
 ## Output screen shots of Serial port utility   :
- <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/1490f67b-c3e4-4163-ba45-e1b79b2d01b7" />
+ <img width="1920" height="1080" alt="Screenshot 2026-05-18 091824" src="https://github.com/user-attachments/assets/43593136-561d-4584-8395-5312db9c343d" />
+
 
  
  
